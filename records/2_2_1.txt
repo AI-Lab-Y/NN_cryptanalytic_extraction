@@ -1,0 +1,52 @@
+true weights are 
+[array([[-0.85201348,  0.32811788],
+        [-0.5619326 , -1.37023813]]) array([[-8.28214833, -9.66249285]])]
+true biases are 
+[array([[ 0.10914868],
+        [-0.60815474]]) array([[9.31046937]])]
+when the recovered model is correct: 
+expected w_1s are: 
+[-1.         0.3851088]
+[-1.         -2.43843857]
+expected w_2 is: 
+[-0.56514536 -0.43485464]
+when we regard k-deep nn as a zero-deep nn: 
+expected gamma_ps are: 
+[ 1.        -0.3851088]
+[1.         2.43843857]
+start step 1: collect decision boundary points
+start step 2: recover $\gamma_P$s
+3 different MAPs occur
+corresponding \gamma_P are: 
+boundary point: 0, \gamma_p is [[1.         0.84272386]]
+boundary point: 1, \gamma_p is [[1.         2.43843864]]
+boundary point: 5, \gamma_p is [[ 1.         -0.38510879]]
+3  true MAPs are  [[3], [1], [2]]
+We have collected all the required queries
+the Oracle query times is 2**12.058668250340572
+start recover nn under a subset of decision boundary points
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  1
+recovered w_1 is  [[ 1.          2.43843864]
+ [ 1.         -0.38510879]]
+recovered w_2 is  [[0.43485462 0.56514538]]
+recovered bs are  [array([[ 1.08225564],
+       [-0.12810677]]), array([[0.74566247]])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.709877
+
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  -1
+recovered w_1 is  [[-1.         -2.43843864]
+ [-1.          0.38510879]]
+recovered w_2 is  [[-0.43485462 -0.56514538]]
+recovered bs are  [array([[-1.08225564],
+       [ 0.12810677]]), array([[0.74566247]])]
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+6 models are checked, and 2 extracted models are final candidates
+
+Process finished with exit code 0

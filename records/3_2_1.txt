@@ -1,0 +1,53 @@
+true weights are 
+[array([[ 1.12803451,  1.01102083, -0.93416896],
+        [-0.60044633,  0.10001893,  3.05868041]])
+ array([[5.1652964 , 5.26441158]])]
+true biases are 
+[array([[-1.60703342],
+        [-0.8543614 ]]) array([[-7.55557325]])]
+when the recovered model is correct: 
+expected w_1s are: 
+[ 1.          0.89626764 -0.82813863]
+[-1.          0.1665743   5.09401134]
+expected w_2 is: 
+[2.18583206 1.18583206]
+when we regard k-deep nn as a zero-deep nn: 
+expected gamma_ps are: 
+[ 1.          0.89626764 -0.82813863]
+[-1.          0.1665743   5.09401134]
+start step 1: collect decision boundary points
+start step 2: recover $\gamma_P$s
+3 different MAPs occur
+corresponding \gamma_P are: 
+boundary point: 0, \gamma_p is [[-1.          0.16657429  5.09401211]]
+boundary point: 1, \gamma_p is [[ 1.          0.89626764 -0.82813865]]
+boundary point: 19, \gamma_p is [[1.         2.15661942 4.23046848]]
+3  true MAPs are  [[1], [2], [3]]
+We have collected all the required queries
+the Oracle query times is 2**12.474719946526482
+start recover nn under a subset of decision boundary points
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  1
+recovered w_1 is  [[-1.          0.16657429  5.09401211]
+ [ 1.          0.89626764 -0.82813865]]
+recovered w_2 is  [[1.18583183 2.18583183]]
+recovered bs are  [array([[-1.42287755],
+       [-1.42463127]]), array([[-2.83443551]])]
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  -1
+recovered w_1 is  [[ 1.         -0.16657429 -5.09401211]
+ [-1.         -0.89626764  0.82813865]]
+recovered w_2 is  [[-1.18583183 -2.18583183]]
+recovered bs are  [array([[1.42287755],
+       [1.42463127]]), array([[-2.83443551]])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.724007
+
+6 models are checked, and 2 extracted models are final candidates
+
+Process finished with exit code 0

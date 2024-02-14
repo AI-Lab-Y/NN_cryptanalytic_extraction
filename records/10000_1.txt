@@ -1,0 +1,14 @@
+normalized true weights with sign are 
+ws:  [[[ 1.          5.10068212  0.54246773 ...  1.94841187  2.23133283
+   30.79789114]]]
+bs:  [[[16.83016479]]]
+
+extracted weights are 
+ws:  [[ 1.          5.10040545  0.54243828 ...  1.94830622  2.23121163
+  30.79619771]]
+bs:  [[16.82925246]]
+the Oracle query times is 2**18.680098500456406
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+Process finished with exit code 0
