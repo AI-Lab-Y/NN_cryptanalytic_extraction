@@ -1,5 +1,5 @@
 '''
-Zero-deep NN (Logistic Regression) extraction attack
+Zero-deep NN extraction attack
 '''
 
 
@@ -108,8 +108,8 @@ def extract_0_deep_nn(model_path=None, precision=10**(-8)):
 
 
 if __name__ == '__main__':
-    # nn_path = './models/special_and_submit/0_deep_nn_1000.npz'
-    nn_path = './models/special_and_submit/0_deep_nn_10000.npz'
+    nn_path = './models/special_and_submit/0_deep_nn_1000.npz'
+    # nn_path = './models/special_and_submit/0_deep_nn_10000.npz'
 
     precision = 10**(-10)
     res = extract_0_deep_nn(model_path=nn_path, precision=precision)

@@ -7,7 +7,7 @@ import numpy as np
 from itertools import combinations
 import utils
 
-total_query_times = 0
+# total_query_times = 0
 
 
 def expected_nn_parameters(nn_shape, ws):
