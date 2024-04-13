@@ -1,0 +1,45 @@
+C:\D_file\software\Anaconda\python.exe C:/D_file/documents/Projects/PythonProjects/myProjects/hard-label-model-extraction-attack/github_extraction_ML_models_update/check_solution_svd.py
+layer num is 2, 2, 2, 2
+ws_real shape is  (2, 3)
+bs_real shape is  (2, 1)
+ws_extract shape is  (2, 3)
+bs_extract shape is  (2, 1)
+ws_real shape is  (1, 2)
+bs_real shape is  (1, 1)
+ws_extract shape is  (1, 2)
+bs_extract shape is  (1, 1)
+Compute the matrix alignment for the SVD upper bound
+ws_real is  [array([[ 1.12803451,  1.01102083, -0.93416896],
+        [-0.60044633,  0.10001893,  3.05868041]])
+ array([[5.1652964 , 5.26441158]])]
+numerator is  [[1.]
+ [1.]
+ [1.]]
+denomicator is  [[ 1.12803451]
+ [-0.60044633]]
+after normalization, ws are: 
+[[ 1.          0.89626764 -0.82813863]
+ [-1.          0.1665743   5.09401134]]
+[[ 1.          0.89626764 -0.82813865]
+ [-1.          0.16657431  5.09401211]]
+index is  [0, 1]
+numerator is  [[ 1.12803451]
+ [-0.60044633]]
+denomicator is  [[2.66563599]]
+after normalization, ws are: 
+[[2.18583206 1.18583206]]
+[[2.18583221 1.18583221]]
+index is  [0]
+Finished alignment. Now compute the max error in the matrix.
+Matrix diff 7.867716739495823e-07
+Bias diff 6.572093524948031e-07
+Matrix diff 3.032517561507575e-07
+Bias diff 1.1560217494377412e-07
+Number of bits of precision in the weight matrix 20.32565168024785
+
+Computing SVD upper bound
+	At layer 0 loss is bounded by 2.7265283110611905e-06
+	At layer 1 loss is bounded by 7.502373362713864e-06
+Upper bound on number of bits of precision in the output through SVD 17.02422150745351
+
+Process finished with exit code 0

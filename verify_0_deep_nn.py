@@ -1,5 +1,5 @@
 '''
-Zero-deep NN extraction attack
+Zero-deep NN (Logistic Regression) extraction attack
 '''
 
 
@@ -108,8 +108,10 @@ def extract_0_deep_nn(model_path=None, precision=10**(-8)):
 
 
 if __name__ == '__main__':
-    nn_path = './models/special_and_submit/0_deep_nn_1000.npz'
-    # nn_path = './models/special_and_submit/0_deep_nn_10000.npz'
+    fea_num = 1000
+
+    nn_path = './models/real_models/0_deep_nn_{}.npz'.format(fea_num)
+    # nn_path = './models/real_models/0_deep_nn_{}.npz'.format{fea_num}
 
     precision = 10**(-10)
     res = extract_0_deep_nn(model_path=nn_path, precision=precision)
@@ -138,6 +140,6 @@ if __name__ == '__main__':
                                                                       h_bs=hat_bs)
     print('prediction matching ratio is ', prediction_matching_ratio)
 
-
-
-
+    # save the extracted model
+    extracted_nn_path = './models/extracted_models/0_deep_nn_{}_1'.format(fea_num)
+    np.savez(extracted_nn_path, hat_ws, hat_bs)

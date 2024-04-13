@@ -1,3 +1,4 @@
+C:\D_file\software\Anaconda\python.exe C:/D_file/documents/Projects/PythonProjects/myProjects/hard-label-model-extraction-attack/github_extraction_ML_models_submit/verify_our_1_deep_nn.py
 true weights are 
 [array([[-0.93265733, -0.37068592, -0.95014374,  1.5432912 ,  1.90274711,
          -0.10346679,  0.91794858,  0.430096  ],

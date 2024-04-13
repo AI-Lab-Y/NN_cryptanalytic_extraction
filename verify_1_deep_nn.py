@@ -7,7 +7,7 @@ import numpy as np
 from itertools import combinations
 import utils
 
-# total_query_times = 0
+total_query_times = 0
 
 
 def expected_nn_parameters(nn_shape, ws):
@@ -146,6 +146,8 @@ def recover_bs_via_soe(di_s, B_P, group_index, extracted_ws):
     '''
     :param di_s: the list consisting of the dimension in each layer
     :param B_P: recovered n biases B_p of f(x) = \gamma_p x + B_p, the array shape is (n, 1)
+    :param group_index: the list of selected decision boundary points,
+                        [[i_{1,1},...,i_{1,d_1}], [i_{2,1},...,i_{2,d_2}],...,[i_{k+1, 1}]]
     :param extracted_ws: extracted weights, the array shape is [k+1, d_i, d_{i-1}]
     :return:
     '''
@@ -191,6 +193,11 @@ def recover_bs_via_soe(di_s, B_P, group_index, extracted_ws):
 
 
 def compare_model_signature(di_s, gamma_ps, extratced_ws, l1_error=10**(-3), confidence=0.6):
+    '''
+    :param gamma_ps: the true weight vectors of affine transformations, the array shape is [, 1, d_0]
+    :param extratced_ws: extracted weights in each layer, the array shape is [, d_i, d_{i-1}]
+    :return: whether the extracted weights and biases are the true one
+    '''
     hidden_layer_num = len(di_s) - 2
     n = np.sum(np.array(di_s)[1:hidden_layer_num+1])
 
@@ -281,6 +288,20 @@ def get_dynamic_confidence(complete_gamma_p, unique_indexs, l1_error=10**(-3)):
     return suitable_confidence
 
 
+def identify_final_model_candidate(surviving_models=None):
+    nn_num = len(surviving_models)
+    if nn_num == 0:
+        print('no surviving nn models')
+        return None
+    else:
+        PMRs = [surviving_models[i][0] for i in range(nn_num)]
+        index = PMRs.index(max(PMRs))
+        pmr, ws_extracted, bs_extracted = surviving_models[index][0], \
+                                          surviving_models[index][1], \
+                                          surviving_models[index][2]
+        return pmr, ws_extracted, bs_extracted
+
+
 def extract_1_deep_nn(model_path=None, nn_shape=None, precision=10**(-8), l1_error=10**(-3)):
     # load model
     fcn = np.load(model_path, allow_pickle=True)
@@ -369,6 +390,7 @@ def extract_1_deep_nn(model_path=None, nn_shape=None, precision=10**(-8), l1_err
     print('the Oracle query times is 2**{}'.format(qw))
 
     print('start recover nn under a subset of decision boundary points')
+    survive_models = []
 
     model_num = 0
     model_candidate_num = 0
@@ -460,14 +482,27 @@ def extract_1_deep_nn(model_path=None, nn_shape=None, precision=10**(-8), l1_err
                 print('prediction matching ratio is ', prediction_matching_ratio)
                 print('')
 
+                # save the surviving model
+                survive_models.append([prediction_matching_ratio, cur_hat_ws, hat_bs])
+
     print('{} models are checked, and {} extracted models are final candidates'.format(model_num,
                                                                                        model_candidate_num))
+
+    # identify and save the final candidate of extracted nn model
+    pmr, ws_extracted, bs_extracted = identify_final_model_candidate(surviving_models=survive_models)
+
+    # folder = './models/extracted_models/'
+    # tmp_path = ''
+    # for i in range(len(nn_shape)):
+    #     tmp_path += '_' + str(nn_shape[i])
+    # model_path = folder + '1_deep_nn' + tmp_path
+    # np.savez(model_path, ws_extracted, bs_extracted)
 
 
 if __name__ == '__main__':
     precision = 10**(-10)
     l1_error = 10**(-3)
 
-    nn_shape = [32, 3, 1]
-    nn_path = './models/c1_1_deep_nn_32_3_1.npz'
+    nn_shape = [2, 2, 1]
+    nn_path = './models/real_models/c1_1_deep_nn_2_2_1.npz'
     extract_1_deep_nn(model_path=nn_path, nn_shape=nn_shape, precision=precision, l1_error=l1_error)

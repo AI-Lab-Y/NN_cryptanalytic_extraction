@@ -41,14 +41,13 @@ def expected_nn_parameters(nn_shape, ws):
     #     print(ws[0][i] * ws[1][0][i] / abs(ws[0][i][0] * ws[1][0][i]))
 
 
-# recover the affine transformation of the k-deep NN
+# recover the affine transofrmation of the k-deep NN
 # ws, bs are the true nn parameters used to collect decision boundary points
 def recover_gamma_b(x, ws, bs, ms=10 ** (-3), precision=10 ** (-8)):
     '''
     :param x: a decision boundary point, the array shape is [d_0, 1]
     :param ws: the true weights, the array shape is [layer_num + 1, d_i, d_{i-1}]
     :param bs: the biases, the array shape is [layer_num + 1, d_i, 1]
-    :param ms: moving stride
     :param precision: the preset precision of the moving stride
     :return: \gamma_p, i.e., the weights of the affine transformation of the k-deep NN
              index, i.e., the subscript of weight used to normalize other weights
@@ -165,6 +164,8 @@ def recover_bs_via_soe(di_s, B_P, group_index, extracted_ws, mp_2):
     '''
     :param di_s: the list consisting of the dimension in each layer
     :param B_P: recovered n biases B_p of f(x) = \gamma_p x + B_p, the array shape is (n, 1)
+    :param group_index: the list of selected decision boundary points,
+                        [[i_{1,1},...,i_{1,d_1}], [i_{2,1},...,i_{2,d_2}],...,[i_{k+1, 1}]]
     :param extracted_ws: extracted weights, the array shape is [k+1, d_i, d_{i-1}]
     :return:
     '''
@@ -341,6 +342,20 @@ def get_dynamic_confidence(complete_gamma_p, unique_indexs, l1_error=10 ** (-3))
     return suitable_confidence
 
 
+def identify_final_model_candidate(surviving_models=None):
+    nn_num = len(surviving_models)
+    if nn_num == 0:
+        print('no surviving nn models')
+        return None
+    else:
+        PMRs = [surviving_models[i][0] for i in range(nn_num)]
+        index = PMRs.index(max(PMRs))
+        pmr, ws_extracted, bs_extracted = surviving_models[index][0], \
+                                          surviving_models[index][1], \
+                                          surviving_models[index][2]
+        return pmr, ws_extracted, bs_extracted
+
+
 def extract_2_deep_nn(model_path=None, nn_shape=None, precision=10 ** (-8), l1_error=10 ** (-3)):
     # load model
     fcn = np.load(model_path, allow_pickle=True)
@@ -357,7 +372,7 @@ def extract_2_deep_nn(model_path=None, nn_shape=None, precision=10 ** (-8), l1_e
     neuron_num = 0
     for i in range(1, len(nn_shape) - 1):
         neuron_num += nn_shape[i]
-    n = 16 * (2 ** neuron_num)
+    n = 8 * (2 ** neuron_num)
 
     # start the extraction attack
     # steps 1: collect decision boundary points
@@ -426,6 +441,7 @@ def extract_2_deep_nn(model_path=None, nn_shape=None, precision=10 ** (-8), l1_e
     print('the Oracle query times is 2**{}'.format(qw))
 
     print('start recover nn under a subset of decision boundary points')
+    survive_models = []
 
     model_num = 0
     model_candidate_num = 0
@@ -447,6 +463,17 @@ def extract_2_deep_nn(model_path=None, nn_shape=None, precision=10 ** (-8), l1_e
                         selected_maps.append(maps[v])
                     selected_maps.append(maps[index_3])
 
+                    # to compute functionally equivalence, choose the correct one
+                    valid_maps = [2**k for k in range(nn_shape[1])]
+                    flag = 1
+                    for v in group_index_1:
+                        mp_in_layer_1 = maps[v]
+                        if mp_in_layer_1[0] not in valid_maps:
+                            flag = flag * 0
+                            break
+                    if flag == 0:
+                        continue
+
                     # step 3: recover weights w_1 in layer 1
                     # print('start step 3')
                     hat_w_1 = [ws_signs[0] * gamma_b[cur_i][0][:nn_shape[0]] for cur_i in group_index_1]
@@ -464,6 +491,7 @@ def extract_2_deep_nn(model_path=None, nn_shape=None, precision=10 ** (-8), l1_e
                                                              layer_no=2,
                                                              selected_indexs=[j for j in range(nn_shape[1])])
                         hat_w_2.append(hat_w_2_index_2[0])
+                    hat_w_1 = np.array(hat_w_1, dtype=np.float64)
 
                     # step 4-2: recover weights w_3 in layer 3
                     # cur_hat_ws = np.array([hat_w_1, hat_w_2], dtype=np.float64)
@@ -566,14 +594,27 @@ def extract_2_deep_nn(model_path=None, nn_shape=None, precision=10 ** (-8), l1_e
                         print('prediction matching ratio is ', prediction_matching_ratio)
                         print('')
 
+                        # save the surviving model
+                        survive_models.append([prediction_matching_ratio, cur_hat_ws, hat_bs])
+
     print('{} models are checked, and {} extracted models are final candidates'.format(model_num,
                                                                                        model_candidate_num))
+
+    # identify and save the final candidate of extracted nn model
+    pmr, ws_extracted, bs_extracted = identify_final_model_candidate(surviving_models=survive_models)
+
+    # folder = './models/extracted_models/'
+    # tmp_path = ''
+    # for i in range(len(nn_shape)):
+    #     tmp_path += '_' + str(nn_shape[i])
+    # model_path = folder + '2_deep_nn' + tmp_path
+    # np.savez(model_path, ws_extracted, bs_extracted)
 
 
 if __name__ == '__main__':
     precision = 10**(-10)
     l1_error = 10**(-3)
 
-    nn_shape = [4, 2, 2, 1]
-    nn_path = './models/c1_2_deep_nn_4_2_2_1.npz'
+    nn_shape = [8, 2, 2, 1]
+    nn_path = './models/real_models/c1_2_deep_nn_8_2_2_1.npz'
     extract_2_deep_nn(model_path=nn_path, nn_shape=nn_shape, precision=precision, l1_error=l1_error)

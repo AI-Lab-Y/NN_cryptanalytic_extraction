@@ -1,4 +1,5 @@
 import numpy as np
+from copy import deepcopy
 
 oracle_query_times = 0
 
@@ -61,6 +62,7 @@ def binary_search(st, di, ws, bs, ms_low=0, ms_high=2**20, precision=10**(-8)):
     :param di: the moving direction, the array shape is [d_0, 1]
     :param ws: the weights of each layer, the array shape is [layer_num + 1, d_i, d_{i-1}]
     :param bs: the biases of each layer, the array shape is [layer_num + 1, d_i, 1]
+    :param ms_th: the upper bound of the absolute moving stride
     :return: the suitable moving stride that makes the st reach the decision boundary
     '''
     _, y_ref = f_cheat(x=st, ws=ws, bs=bs)
@@ -117,7 +119,7 @@ def find_one_decision_boundary_point(ws, bs, layer_num=0, precision=10**(-8)):
 
 # when checking the prediction matching ratio, we do not count the Oracle query times.
 # Because we can test PMR by reusing queries.
-def check_prediction_matching_ratio(t_ws, t_bs, h_ws, h_bs):
+def check_prediction_matching_ratio(t_ws, t_bs, h_ws, h_bs, n=10**6):
     '''
     :param t_ws: true weights, the array shape is [layer_num + 1, d_i, d_{i-1}]
     :param t_bs: true biases, the array shape is [layer_num + 1, d_i, 1]
@@ -127,7 +129,6 @@ def check_prediction_matching_ratio(t_ws, t_bs, h_ws, h_bs):
     '''
     d_0 = t_ws[0].shape[1]
 
-    n = 10**6
     res = 0
     for i in range(n):
         x = np.random.normal(loc=0.0, scale=1.0, size=(d_0, 1))
@@ -159,3 +160,94 @@ def filter_duplicate_vectors(arr, l1_error=10**(-3)):
             res.append(i)
             m += 1
     return res
+
+
+def align_deep_nns(ws_real=None, bs_real=None, ws_extract=None, bs_extract=None, nn_shape=None):
+    print('ws_real is ', ws_real)
+
+    err_bound = 10**(-2)
+
+    # create a copy of ws_real
+    aligned_ws_real = deepcopy(ws_real)
+    aligned_bs_real = deepcopy(bs_real)
+
+    def compute_norm_factors(i):
+        numerator_factors = np.ones((d_0, 1), dtype=np.float64)
+        denominator_factors = ws_real[0][:, 0].reshape(-1, 1)
+        if i == 1:
+            return numerator_factors, denominator_factors
+        else:
+            # numerator_factors_new = deepcopy(denominator_factors)
+            # for j in range(1, i):
+            #     denominator_factors = np.matmul(ws_real[j], denominator_factors)
+            # for j in range(1, i-1):
+            #     numerator_factors_new = np.matmul(ws_real[j], numerator_factors_new)
+            # return numerator_factors_new, denominator_factors
+
+            numerator_factors_new = deepcopy(denominator_factors)
+            for j in range(1, i - 1):
+                numerator_factors_new = np.matmul(ws_real[j], numerator_factors_new)
+            if i - 1 > 0:
+                denominator_factors = np.matmul(ws_real[i-1], numerator_factors_new)
+            return numerator_factors_new, denominator_factors
+
+    # create an identity matrix
+    d_0 = nn_shape[0]
+
+    layer_num = len(nn_shape)
+    for i in range(1, layer_num):
+        # print('i is ', i)
+        d_i = nn_shape[i]
+
+        # compute the numerator_factors and denominator_factors
+        numerator_factors, denominator_factors = compute_norm_factors(i)
+        print('numerator is ', numerator_factors)
+        print('denomicator is ', denominator_factors)
+        assert denominator_factors.shape[1] == 1
+        assert denominator_factors.shape[0] == d_i
+        # normalize current layer weights and biases
+        for j in range(d_i):
+            aligned_ws_real[i-1][j] = aligned_ws_real[i-1][j] / abs(denominator_factors[j][0])
+            aligned_bs_real[i-1][j] = aligned_bs_real[i-1][j] / abs(denominator_factors[j][0])
+        d_i_minus_1 = nn_shape[i-1]
+        for j in range(d_i_minus_1):
+            aligned_ws_real[i-1][:, j] = aligned_ws_real[i-1][:, j] * abs(numerator_factors[j][0])
+
+        print('after normalization, ws are: ')
+        print(aligned_ws_real[i-1])
+        print(ws_extract[i-1])
+
+        # adjust the neuron order of current layer of the victim nn
+        index = []
+        for j_e in range(d_i):
+            for j_r in range(d_i):
+                if np.max(aligned_ws_real[i-1][j_r] - ws_extract[i-1][j_e]) < err_bound:
+                    index.append(j_r)
+                    break
+
+        # adjust weights (rows) and biases of current layer according to the new neuron order
+        tmp_ws = deepcopy(aligned_ws_real[i-1])
+        tmp_bs = deepcopy(aligned_bs_real[i-1])
+        print('index is ', index)
+        for j_r in range(d_i):
+            aligned_ws_real[i-1][j_r] = tmp_ws[index[j_r]]
+            aligned_bs_real[i-1][j_r] = tmp_bs[index[j_r]]
+
+        # update ws_real according to the neuron order
+        tmp_ws = deepcopy(ws_real[i-1])
+        for j_r in range(d_i):
+            ws_real[i-1][j_r] = tmp_ws[index[j_r]]
+
+        # adjust weights (columns) of the next layer according to the new neuron order
+        if i != layer_num - 1:
+            tmp_ws = deepcopy(aligned_ws_real[i])
+            for j_r in range(d_i):
+                aligned_ws_real[i][:, j_r] = tmp_ws[:, index[j_r]]
+
+        # update ws_real according to the neuron order
+        if i != layer_num - 1:
+            tmp_ws = deepcopy(ws_real[i])
+            for j_r in range(d_i):
+                ws_real[i][:, j_r] = tmp_ws[:, index[j_r]]
+
+    return aligned_ws_real, aligned_bs_real
