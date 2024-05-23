@@ -1,4 +1,3 @@
 # NN_cryptanalytic_extraction
 
-
-The compressed package (verify_code.zip) contains all the files
+requirements: python 3.7.0, numpy 1.21.5
