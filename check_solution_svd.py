@@ -14,21 +14,36 @@ from utils import align_deep_nns
 # ------------load the real nn and extracted nn--------------
 
 # load model
-nn_shape = [8, 2, 2, 1]
+# nn_shape = [784, 2, 1]        # for mnist
+nn_shape = [3072, 2, 1]         # for cifar10
+# nn_shape = [1024, 2, 2, 1]          # for simulated
 
-real_nn_path = 'c1_{}_deep_nn'.format(len(nn_shape) - 2)
-extracted_nn_path = '{}_deep_nn'.format(len(nn_shape) - 2)
+# 0: airplane,      1: automobile       2: bird,        3: cat,     4: deer
+# 5: dog            6: frog             7: horse        8: ship     9: truck
+real_nn_path = 'cifar10_8vs9'
+extracted_nn_path = '12p_cifar10_8vs9'
+
+# real_nn_path = 'mnist_2vs3'
+# extracted_nn_path = '12p_mnist_2vs3'
+
+# real_nn_path = '2_deep_nn'
+# extracted_nn_path = '14p'
+
 for i in range(len(nn_shape)):
     real_nn_path = real_nn_path + '_' + str(nn_shape[i])
     extracted_nn_path = extracted_nn_path + '_' + str(nn_shape[i])
 real_nn_path = real_nn_path + '.npz'
 extracted_nn_path = extracted_nn_path + '.npz'
 
-real_model_path = './models/real_models/' + real_nn_path
+# real_model_path = './models/simulated/' + real_nn_path
+real_model_path = './models/cifar10/' + real_nn_path
+# real_model_path = './models/mnist/' + real_nn_path
 fcn_real = np.load(real_model_path, allow_pickle=True)
 ws_real, bs_real = fcn_real['arr_0'], fcn_real['arr_1']
 
-extracted_model_path = './models/extracted_models/' + extracted_nn_path
+# extracted_model_path = './models/extracted_models/simulated/' + extracted_nn_path
+extracted_model_path = './models/extracted_models/cifar10/' + extracted_nn_path
+# extracted_model_path = './models/extracted_models/mnist/' + extracted_nn_path
 fcn_extract = np.load(extracted_model_path, allow_pickle=True)
 ws_extract, bs_extract = fcn_extract['arr_0'], fcn_extract['arr_1']
 
@@ -48,8 +63,8 @@ A2, B2 = ws_extract, bs_extract
 print("Finished alignment. Now compute the max error in the matrix.")
 max_err = 0
 for l in range(len(A1)):
-    print("Matrix diff", np.sum(np.abs(A1[l] - A2[l])))
-    print("Bias diff", np.sum(np.abs(B1[l] - B2[l])))
+    print("Matrix diff", np.max(np.abs(A1[l] - A2[l])))
+    print("Bias diff", np.max(np.abs(B1[l] - B2[l])))
     max_err = max(max_err, np.max(np.abs(A1[l] - A2[l])))
     max_err = max(max_err, np.max(np.abs(B1[l] - B2[l])))
 

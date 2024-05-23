@@ -70,20 +70,23 @@ def binary_search(st, di, ws, bs, ms_low=0, ms_high=2**20, precision=10**(-8)):
     _, y_high = f_cheat(x=st + di * ms_high, ws=ws, bs=bs)
 
     if y_low != y_high:
-        while abs(ms_high - ms_low) >= precision:
+        while abs(ms_high - ms_low) > precision:
             ms_mid = ms_low + (ms_high - ms_low) / 2
             x_mid = st + di * ms_mid
             _, y_mid = f_cheat(x=x_mid, ws=ws, bs=bs)
             if y_mid == y_low:
-                if ms_mid != ms_low:
+                if ms_low == ms_mid:
+                    break
+                else:
                     ms_low = ms_mid
-                else:
-                    ms_low = ms_mid - precision * 0.5
             else:
-                if ms_mid != ms_high:
-                    ms_high = ms_mid
+                if ms_high == ms_mid:
+                    break
                 else:
-                    ms_high = ms_mid + precision * 0.5
+                    ms_high = ms_mid
+            # print('\r ms_high is {}, ms_low is {}'.format(ms_high, ms_low), end='')
+        # print('')
+
         return ms_low + (ms_high - ms_low) / 2
     else:
         return None
@@ -201,8 +204,8 @@ def align_deep_nns(ws_real=None, bs_real=None, ws_extract=None, bs_extract=None,
 
         # compute the numerator_factors and denominator_factors
         numerator_factors, denominator_factors = compute_norm_factors(i)
-        print('numerator is ', numerator_factors)
-        print('denomicator is ', denominator_factors)
+        # print('numerator is ', numerator_factors)
+        # print('denomicator is ', denominator_factors)
         assert denominator_factors.shape[1] == 1
         assert denominator_factors.shape[0] == d_i
         # normalize current layer weights and biases

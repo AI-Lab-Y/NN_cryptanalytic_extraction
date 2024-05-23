@@ -1,0 +1,64 @@
+true weights are 
+[array([[ 0.07898726, -0.21867332, -0.09925936, ...,  0.07875211,
+         -0.24164889, -0.18372078],
+        [-0.07948039, -0.07955192, -0.07958334, ...,  0.08367303,
+          0.07858125, -0.11754213]])
+ array([[0.78211751, 0.12463772]])]
+true biases are 
+[array([[ 0.64371179],
+        [-0.00254383]]) array([[-1.19888546]])]
+when the recovered model is correct: 
+expected w_1s are: 
+[ 1.         -2.76846329 -1.25665032 ...  0.99702295 -3.05934024
+ -2.32595475]
+[-1.         -1.00089997 -1.00129529 ...  1.05275068  0.98868732
+ -1.47888221]
+expected w_2 is: 
+[1.19097845 0.19097845]
+when we regard k-deep nn as a zero-deep nn: 
+expected gamma_ps are: 
+[ 1.         -2.76846329 -1.25665032 ...  0.99702295 -3.05934024
+ -2.32595475]
+[-1.         -1.00089997 -1.00129529 ...  1.05275068  0.98868732
+ -1.47888221]
+start step 1: collect decision boundary points
+start step 2: recover $\gamma_P$s
+3 different MAPs occur
+corresponding \gamma_P are: 
+boundary point: 0, \gamma_p is [[ 1.         -3.48833037 -1.68786923 ...  1.38848551 -3.45479026
+  -3.05259655]]
+boundary point: 1, \gamma_p is [[-1.         -1.00090005 -1.00129537 ...  1.05275076  0.9886874
+  -1.47888233]]
+boundary point: 5, \gamma_p is [[ 1.         -2.76846336 -1.25665035 ...  0.99702295 -3.05934025
+  -2.32595475]]
+3  true MAPs are  [[3], [1], [2]]
+We have collected all the required queries
+the Oracle query times is 2**22.220861258330572
+start recover nn under a subset of decision boundary points
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  1
+recovered w_1 is  [[-1.         -1.00090005 -1.00129537 ...  1.05275076  0.9886874
+  -1.47888233]
+ [ 1.         -2.76846336 -1.25665035 ...  0.99702295 -3.05934025
+  -2.32595475]]
+recovered w_2 is  [[0.1909784 1.1909784]]
+recovered bs are  [array([[-0.03211382],
+       [ 8.14956321]]), array([[-23.11277635]])]
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  -1
+recovered w_1 is  [[ 1.          1.00090005  1.00129537 ... -1.05275076 -0.9886874
+   1.47888233]
+ [-1.          2.76846336  1.25665035 ... -0.99702295  3.05934025
+   2.32595475]]
+recovered w_2 is  [[-0.1909784 -1.1909784]]
+recovered bs are  [array([[ 0.03211382],
+       [-8.14956321]]), array([[-23.11277635]])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.486794
+
+6 models are checked, and 2 extracted models are final candidates

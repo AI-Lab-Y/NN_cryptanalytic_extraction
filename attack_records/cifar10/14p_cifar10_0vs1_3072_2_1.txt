@@ -1,0 +1,66 @@
+true weights are 
+[array([[ 0.07623592, -0.07629002, -0.07587668, ..., -0.07540333,
+          0.18624466, -0.07586093],
+        [-0.09318968,  0.15000179,  0.07647922, ...,  0.07763698,
+          0.07850274,  0.0780237 ]])
+ array([[-1.33272654, -0.49447838]])]
+true biases are 
+[array([[1.07990903],
+        [0.08924775]]) array([[1.71752513]])]
+when the recovered model is correct: 
+expected w_1s are: 
+[ 1.         -1.0007096  -0.99528785 ... -0.9890788   2.44300411
+ -0.99508117]
+[-1.          1.60963946  0.82068332 ...  0.83310701  0.8423974
+  0.83725687]
+expected w_2 is: 
+[-1.82995606 -0.82995606]
+when we regard k-deep nn as a zero-deep nn: 
+expected gamma_ps are: 
+[-1.          1.0007096   0.99528785 ...  0.9890788  -2.44300411
+  0.99508117]
+[ 1.         -1.60963946 -0.82068332 ... -0.83310701 -0.8423974
+ -0.83725687]
+start step 1: collect decision boundary points
+start step 2: recover $\gamma_P$s
+4 different MAPs occur
+corresponding \gamma_P are: 
+boundary point: 0, \gamma_p is [[ 1.         -1.60963942 -0.8206833  ... -0.83310698 -0.84239738
+  -0.83725685]]
+boundary point: 1, \gamma_p is [[-1.          0.49532456  1.14020193 ...  1.11852853 -5.16974298
+   1.12606838]]
+boundary point: 7, \gamma_p is [[-1.          1.00070959  0.99528785 ...  0.9890788  -2.44300411
+   0.99508116]]
+boundary point: 18, \gamma_p is [[-1.          1.00070956  0.99528782 ...  0.98907877 -2.44300402
+   0.99508113]]
+4  true MAPs are  [[1], [3], [2], [2]]
+We have collected all the required queries
+the Oracle query times is 2**22.28619703598626
+start recover nn under a subset of decision boundary points
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  1
+recovered w_1 is  [[ 1.         -1.60963942 -0.8206833  ... -0.83310698 -0.84239738
+  -0.83725685]
+ [-1.          1.00070959  0.99528785 ...  0.9890788  -2.44300411
+   0.99508116]]
+recovered w_2 is  [[0.82995611 1.82995611]]
+recovered bs are  [array([[ -0.95769984],
+       [-14.16535894]]), array([[30.93450207]])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.351955
+
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  -1
+recovered w_1 is  [[-1.          1.60963942  0.8206833  ...  0.83310698  0.84239738
+   0.83725685]
+ [ 1.         -1.00070959 -0.99528785 ... -0.9890788   2.44300411
+  -0.99508116]]
+recovered w_2 is  [[-0.82995611 -1.82995611]]
+recovered bs are  [array([[ 0.95769984],
+       [14.16535894]]), array([[30.93450207]])]
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+24 models are checked, and 2 extracted models are final candidates

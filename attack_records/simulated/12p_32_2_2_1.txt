@@ -1,0 +1,310 @@
+true weights are 
+[array([[ 2.38014425,  2.78962381, -2.95167258, -4.88316615,  4.11955822,
+         -0.27515406, -4.73548765,  3.1605222 , -0.59595023,  2.79826136,
+         -2.21807803, -0.61952814, -0.12898823, -4.59431118, -0.94169451,
+          4.49160991,  3.40864535,  3.59673149, -1.31091712,  0.20516223,
+          0.49839414,  1.40257147,  0.08263236, -4.88165894, -4.74790549,
+          0.64591925, -1.64175445,  0.91093591, -4.7442393 , -0.31404662,
+         -0.16737209, -1.82103083],
+        [-0.8572534 ,  2.82844549, -3.13603196, -0.35559544,  4.74397935,
+          0.83532552,  3.59598545, -0.0344981 , -0.76650537, -4.13520046,
+         -4.88029789, -3.9814369 , -1.82955955,  3.71166653,  2.02082679,
+         -0.69960818, -4.10110221,  4.42838671,  2.36111829,  1.51018899,
+          1.33995112,  4.74642555,  3.36066218,  4.46437352, -4.69758301,
+          1.67374421,  3.59519917,  4.21828208,  0.44794584, -2.647192  ,
+         -1.82865668,  4.43357395]])
+ array([[-0.16518748,  2.37952289],
+        [ 1.95955576, -0.54987314]]) array([[-4.57803031, -9.58033452]])]
+true biases are 
+[array([[-0.04192943],
+        [ 0.03325617]]) array([[-1.2580817 ],
+                               [-1.24478463]]) array([[9.21984593]])]
+when the recovered model is correct: 
+expected w_1 is: 
+[ 1.          1.17203981 -1.2401234  -2.05162613  1.73080191 -0.11560394
+ -1.9895801   1.32787002 -0.25038408  1.17566881 -0.93190907 -0.26029016
+ -0.05419345 -1.93026586 -0.39564598  1.88711668  1.43211713  1.51114013
+ -0.55077213  0.08619739  0.20939661  0.58928003  0.03471738 -2.05099289
+ -1.99479737  0.27137819 -0.68977099  0.38272298 -1.99325704 -0.13194437
+ -0.07032014 -0.76509263]
+[-1.          3.29942757 -3.65823219 -0.41480785  5.53392891  0.97442077
+  4.19477539 -0.04024259 -0.89414096 -4.82377845 -5.6929467  -4.64441076
+ -2.13421091  4.32971926  2.35732725 -0.8161043  -4.78400229  5.16578497
+  2.7542828   1.76165997  1.56307474  5.53678244  3.92026698  5.20776418
+ -5.47980683  1.95244979  4.19385819  4.92069451  0.52253609 -3.08799243
+ -2.13315769  5.17183597]
+expected w_2 is: 
+[[-0.16159725997851992, 0.8384027400214802], [0.9082096695165323, -0.0917903304834678]]
+expected w_3 is: 
+[[-0.2926517761559846, -1.2926517761559846]]
+start step 1: collect decision boundary points
+start step 2: recover (\gamma_P, B_P)
+6 different MAPs occur
+corresponding (\gamma_P, B_P) are: 
+boundary point: 0, (\gamma_p, B_P) is [[ 1.         -2.57686189  2.86668376  0.01623893 -4.35998343 -0.835641
+  -3.83843925  0.24832045  0.70919093  4.23426505  4.62239938  3.8518371
+   1.7805759  -3.94198652 -2.04033072  0.98917967  4.24236218 -4.08681782
+  -2.39820765 -1.46305585 -1.27665245 -4.54684415 -3.28116665 -4.69764955
+   4.27195017 -1.59308978 -3.62761711 -4.06369465 -0.76020305  2.56766801
+   1.77708674 -4.45972743  1.3094617 ]]
+boundary point: 1, (\gamma_p, B_P) is [[-1.         -0.76160068  0.79050017  1.82522656 -1.06396797  0.19443462
+   2.19199091 -1.20967636  0.14532745 -1.51052632  0.32381074 -0.18991357
+  -0.14668061  2.15050837  0.57570807 -1.78880457 -1.73978397 -0.89826109
+   0.75303176  0.08341788 -0.04670079 -0.02696668  0.32831132  2.34075111
+   1.30869845 -0.06725216  1.01141044  0.10407925  1.85825494 -0.16361437
+  -0.13193755  1.16958674  0.44935132]]
+boundary point: 2, (\gamma_p, B_P) is [[-1.         -1.17204176  1.24012524  2.05162861 -1.73080422  0.11560413
+   1.98958352 -1.32787206  0.25038449 -1.17567093  0.93191055  0.26029057
+   0.05419354  1.93026795  0.39564655 -1.88711906 -1.43211883 -1.51114282
+   0.55077289 -0.08619753 -0.20939693 -0.58928084 -0.03471743  2.05099766
+   1.99479893 -0.27137861  0.68977212 -0.38272356  1.99325845  0.13194457
+   0.07032025  0.76509389  0.49084709]]
+boundary point: 6, (\gamma_p, B_P) is [[ 1.         -3.29944626  3.65825591  0.41481002 -5.53395156 -0.97442622
+  -4.19479579  0.0402428   0.89414551  4.82381095  5.6929797   4.64443278
+   2.1342227  -4.32974389 -2.35733975  0.81610863  4.78402862 -5.16582061
+  -2.75429398 -1.76166888 -1.56308277 -5.53680517 -3.92028283 -5.20778753
+   5.47983897 -1.9524613  -4.19387827 -4.92072565 -0.52253867  3.08801266
+   2.13316694 -5.17186695  1.5652561 ]]
+boundary point: 16, (\gamma_p, B_P) is [[-1.         -1.73860363  1.86077646  2.36413908 -2.651294    0.00678573
+   1.71016499 -1.49101916  0.39540309 -0.71342661  1.7713232   0.88174964
+   0.33147945  1.62623701  0.14708683 -2.02281851 -1.00740787 -2.35715345
+   0.27157134 -0.32033369 -0.43398083 -1.36549402 -0.5358415   1.65100475
+   2.94188031 -0.55315231  0.24577788 -1.0547021   2.17960337  0.53993253
+   0.3495161   0.20672663  0.7218299 ]]
+boundary point: 76, (\gamma_p, B_P) is [[-1.         -1.73862615  1.86079903  2.36416511 -2.65132018  0.01284882
+   1.71018406 -1.49103779  0.39540775 -0.71343467  1.77134365 -0.01255006
+  -0.0096931   1.62625425  0.14708855 -2.02284137 -1.00742015 -2.35717932
+   0.2715745  -0.32033741 -0.43398592 -1.36550965 -0.53584765  1.65102506
+   2.94191255 -0.55315887  0.24578075 -1.05471454  2.17962992 -0.01081213
+  -0.00871883  0.20672905  0.79311524]]
+6  true MAPs are  [[3, 2], [3, 1], [2, 1], [1, 2], [3, 3], [3, 3]]
+We have collected all the required queries
+the Oracle query times is 2**17.31940751792718
+start recover nn under a subset of decision boundary points
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278683
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.279259
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278419
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278768
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.941474
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.472821
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.886147
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.747598
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.279159
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278573
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278433
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278792
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.721028
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.721019
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.72083
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278714
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278436
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278724
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, 1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278624
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.941187
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.472861
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.886319
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [1, -1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.748228
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.27878
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.278469
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.277753
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, 1]
+recovered w_2 is  [array([ 0.16159819, -0.83840181]), array([-0.90820929,  0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.27861
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.721614
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.999999
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.720595
+
+we have found a solution
+the model activation patterns of selected points are  [[2, 1], [1, 2], [3, 2], [3, 1], [3, 3]]
+selected ws_signs is  [-1, -1]
+recovered w_2 is  [array([-0.16159819,  0.83840181]), array([ 0.90820929, -0.09179071])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.720827
+
+720 models are checked, and 8 extracted models are final candidates
+
+Process finished with exit code 0

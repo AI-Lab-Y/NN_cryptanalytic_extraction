@@ -1,0 +1,64 @@
+true weights are 
+[array([[-0.11158031, -0.18149758, -0.21315059, ...,  0.07036664,
+         -0.23019253,  0.07006493],
+        [ 0.07888148,  0.09691668,  0.09894339, ...,  0.14821055,
+         -0.20097434,  0.135237  ]])
+ array([[-1.51262432, -0.48718894]])]
+true biases are 
+[array([[ 0.04784698],
+        [-0.03013403]]) array([[2.08836993]])]
+when the recovered model is correct: 
+expected w_1s are: 
+[-1.         -1.62660934 -1.91028847 ...  0.63063673 -2.06302096
+  0.62793275]
+[ 1.          1.22863668  1.25432978 ...  1.87890163 -2.5478013
+  1.71443273]
+expected w_2 is: 
+[-1.29482552 -0.29482552]
+when we regard k-deep nn as a zero-deep nn: 
+expected gamma_ps are: 
+[ 1.          1.62660934  1.91028847 ... -0.63063673  2.06302096
+ -0.62793275]
+[-1.         -1.22863668 -1.25432978 ... -1.87890163  2.5478013
+ -1.71443273]
+start step 1: collect decision boundary points
+start step 2: recover $\gamma_P$s
+3 different MAPs occur
+corresponding \gamma_P are: 
+boundary point: 0, \gamma_p is [[ 1.          1.7439418   2.10368178 ... -1.37051265  3.42240897
+  -1.31852184]]
+boundary point: 4, \gamma_p is [[-1.         -1.22863671 -1.25432981 ... -1.87890168  2.54780137
+  -1.71443277]]
+boundary point: 5, \gamma_p is [[ 1.          1.62660931  1.91028843 ... -0.63063672  2.06302092
+  -0.62793274]]
+3  true MAPs are  [[3], [1], [2]]
+We have collected all the required queries
+the Oracle query times is 2**22.285911550375513
+start recover nn under a subset of decision boundary points
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  1
+recovered w_1 is  [[-1.         -1.22863671 -1.25432981 ... -1.87890168  2.54780137
+  -1.71443277]
+ [ 1.          1.62660931  1.91028843 ... -0.63063672  2.06302092
+  -0.62793274]]
+recovered w_2 is  [[0.29482556 1.29482556]]
+recovered bs are  [array([[ 0.38201796],
+       [-0.42881338]]), array([[16.02138559]])]
+start checking the prediction matching ratio
+prediction matching ratio is  0.427837
+
+we have found a solution
+the model activation patterns of selected points are  [[1], [2], [3]]
+selected w_2 sign is  -1
+recovered w_1 is  [[ 1.          1.22863671  1.25432981 ...  1.87890168 -2.54780137
+   1.71443277]
+ [-1.         -1.62660931 -1.91028843 ...  0.63063672 -2.06302092
+   0.62793274]]
+recovered w_2 is  [[-0.29482556 -1.29482556]]
+recovered bs are  [array([[-0.38201796],
+       [ 0.42881338]]), array([[16.02138559]])]
+start checking the prediction matching ratio
+prediction matching ratio is  1.0
+
+6 models are checked, and 2 extracted models are final candidates
