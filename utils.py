@@ -62,7 +62,6 @@ def binary_search(st, di, ws, bs, ms_low=0, ms_high=2**20, precision=10**(-8)):
     :param di: the moving direction, the array shape is [d_0, 1]
     :param ws: the weights of each layer, the array shape is [layer_num + 1, d_i, d_{i-1}]
     :param bs: the biases of each layer, the array shape is [layer_num + 1, d_i, 1]
-    :param ms_th: the upper bound of the absolute moving stride
     :return: the suitable moving stride that makes the st reach the decision boundary
     '''
     _, y_ref = f_cheat(x=st, ws=ws, bs=bs)
@@ -84,9 +83,6 @@ def binary_search(st, di, ws, bs, ms_low=0, ms_high=2**20, precision=10**(-8)):
                     break
                 else:
                     ms_high = ms_mid
-            # print('\r ms_high is {}, ms_low is {}'.format(ms_high, ms_low), end='')
-        # print('')
-
         return ms_low + (ms_high - ms_low) / 2
     else:
         return None
@@ -180,13 +176,6 @@ def align_deep_nns(ws_real=None, bs_real=None, ws_extract=None, bs_extract=None,
         if i == 1:
             return numerator_factors, denominator_factors
         else:
-            # numerator_factors_new = deepcopy(denominator_factors)
-            # for j in range(1, i):
-            #     denominator_factors = np.matmul(ws_real[j], denominator_factors)
-            # for j in range(1, i-1):
-            #     numerator_factors_new = np.matmul(ws_real[j], numerator_factors_new)
-            # return numerator_factors_new, denominator_factors
-
             numerator_factors_new = deepcopy(denominator_factors)
             for j in range(1, i - 1):
                 numerator_factors_new = np.matmul(ws_real[j], numerator_factors_new)
