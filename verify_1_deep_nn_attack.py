@@ -1,7 +1,5 @@
 '''
 One-deep NN extraction attack.
-To verify the rationale of our attack, we obtain extracted parameters by solving systems of linear equations,
-instead of directly computing according to the theoretical equations.
 '''
 
 
