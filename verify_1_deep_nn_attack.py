@@ -132,9 +132,6 @@ def recover_ws_via_soe(di_s, extracted_ws, target_ws, layer_no, selected_indexs)
     for i in range(len(selected_indexs)):
         y.append(target_ws[selected_indexs[i]])
 
-    # print('coefficient matrix is ', h)
-    # print('value array is ', y)
-
     # solving the system of linear equations
     soln, *rest = np.linalg.lstsq(CM, y, 1e-6)
     # reshape soln into [1, d_i_minus_1]
@@ -189,7 +186,6 @@ def recover_bs_via_soe(di_s, B_P, group_index, extracted_ws):
             cnt += 1
         b_i = np.array(b_i, dtype=np.float64).reshape((-1, 1))
         bs.append(b_i)
-        # bs.append(np.array(b_i, dtype=np.float64))
 
     return bs
 
@@ -263,8 +259,6 @@ def compare_model_signature(di_s, gamma_ps, extratced_ws, l1_error=10**(-3), con
         for j in range(ps_num):         # the extracted model signature
             diff_vec = gamma_ps[i] - extracted_gamma_ps[j]
             if np.max(np.abs(diff_vec)) < l1_error:
-                # print('model activation pattern is ', j + 1)
-                # print('diff_vector is ', diff_vec)
                 flag = flag ^ 1
                 break
         cnt += flag
