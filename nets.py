@@ -1,10 +1,13 @@
 import numpy as np
 
+
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 
+
 def relu(x):
     return np.maximum(0, x)
+
 
 class TwoLayerNet:
     '''
@@ -34,7 +37,8 @@ class TwoLayerNet:
         y = np.squeeze(y) > 0.5
         accuracy = np.sum(y == t) / float(x.shape[0])
         return accuracy
-    
+
+
 def load_network(saved_path):
     '''
     Load a neural network from the npz file.
@@ -58,6 +62,7 @@ def load_network(saved_path):
     network.params['b1'] = b1
     network.params['b2'] = b2
     return network
+
 
 def save_network(net: TwoLayerNet, saved_path):
     '''

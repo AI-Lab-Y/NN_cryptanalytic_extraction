@@ -19,12 +19,14 @@ mnist_test_labels_url = "https://storage.googleapis.com/cvdf-datasets/mnist/t10k
 
 cifar10_dataset_url = "https://www.cs.toronto.edu/~kriz/cifar-10-python.tar.gz"
 
+
 def un_gz(file_path:str):
     g_file = gzip.GzipFile(file_path)
     result_path = file_path.replace(".gz", "")
     with open(result_path, "wb") as f:
         f.write(g_file.read())
     g_file.close()
+
 
 def un_tar(file_path:str):
     tar = tarfile.open(file_path)
@@ -36,6 +38,7 @@ def un_tar(file_path:str):
         tar.extract(name, result_folder)
     tar.close()
 
+
 def convert_bytes_to_int(bytes_array:bytes, endian="big_endian"):
     res = 0
     if endian == "big_endian":
@@ -45,6 +48,7 @@ def convert_bytes_to_int(bytes_array:bytes, endian="big_endian"):
     for i in iterator:
         res = (res << 8) | i
     return res
+
 
 def download_mnist_dataset(save_folder:str):
     global mnist_train_images_url, mnist_train_labels_url, mnist_test_images_url, mnist_test_labels_url
@@ -74,6 +78,7 @@ def download_mnist_dataset(save_folder:str):
         wget.download(mnist_test_labels_url, test_labels_path + ".gz")
         un_gz(test_labels_path + ".gz")
 
+
 def download_cifar10_dataset(save_folder:str):
     global cifar10_dataset_url
     if not (save_folder.endswith("/") or save_folder.endswith("\\")):
@@ -88,6 +93,7 @@ def download_cifar10_dataset(save_folder:str):
         un_gz(file_path + ".tar.gz")
         un_tar(file_path + ".tar")
 
+
 def load_labels_from_file_mnist(file_path):
     with open(file_path, mode="rb") as f:
         bytes_array = f.read()
@@ -99,6 +105,7 @@ def load_labels_from_file_mnist(file_path):
     assert len(bytes_array) == samples_number
     labels = np.array([i for i in bytes_array], dtype=np.uint8)
     return labels
+
 
 def load_images_from_file_mnist(file_path):
     with open(file_path, mode="rb") as f:
@@ -121,6 +128,7 @@ def load_images_from_file_mnist(file_path):
                 byte_index += 1
     return images
 
+
 def load_mnist_data(dataset_folder:str):
     if not (dataset_folder.endswith("/") or dataset_folder.endswith("\\")):
         dataset_folder += "/"
@@ -135,6 +143,7 @@ def load_mnist_data(dataset_folder:str):
     train_images = np.reshape(train_images, (len(train_images), -1))
     test_images = np.reshape(test_images, (len(test_images), -1))
     return (train_images, train_labels), (test_images, test_labels)
+
 
 def load_cifar10_data(dataset_folder:str):
     if not (dataset_folder.endswith("/") or dataset_folder.endswith("\\")):
@@ -155,6 +164,7 @@ def load_cifar10_data(dataset_folder:str):
         test_labels = np.array(dict[bytes("labels", encoding="utf-8")], dtype=np.uint64)
     return (train_images, train_labels), (test_images, test_labels)
 
+
 def download_and_load_dataset(data_set_name="mnist", data_folder="./datasets/"):
     '''
     Download and then load a dataset.
@@ -172,6 +182,7 @@ def download_and_load_dataset(data_set_name="mnist", data_folder="./datasets/"):
     elif data_set_name == "cifar10":
         download_cifar10_dataset(dataset_folder)
         return load_cifar10_data(dataset_folder)
+
 
 def choose_two_classes_from_dataset(dataset, p_number, n_number):
     '''
@@ -197,6 +208,7 @@ def choose_two_classes_from_dataset(dataset, p_number, n_number):
     test_labels = np.concatenate((np.ones(len(test_p_images), dtype=np.uint8), np.zeros(len(test_n_images), dtype=np.uint8)))
     return (train_images, train_labels), (test_images, test_labels)
 
+
 def show_sample_images(image, data_set_name="mnist"):
     if data_set_name == "mnist":
         plt.figure("Example image of mnist dataset")
@@ -206,6 +218,7 @@ def show_sample_images(image, data_set_name="mnist"):
         plt.figure("Example image of cifar10 dataset")
         plt.imshow(image.reshape(3, 32, 32).transpose(1, 2, 0))
         plt.show()
+
 
 if __name__ == "__main__":
     # choose test dataset
@@ -237,7 +250,7 @@ if __name__ == "__main__":
 
         # show an example image for each dataset
         print("\nshowing an example image for cifar10 dataset...")
-        show_sample_images(cifar10_dataset[0][0][0], "cifar10")
+        show_sample_images(cifar10_dataset[0][0][2], "cifar10")
     
         # test accuracy of victim models for cifar10 dataset
         print("\ntesting accuracy...")
