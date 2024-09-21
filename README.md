@@ -1,5 +1,10 @@
 # NN_cryptanalytic_extraction
 
+Hard-Label Cryptanalytic Extraction of Neural Network Models.
+https://arxiv.org/abs/2409.11646v1
+https://eprint.iacr.org/2024/1403
+Yi Chen, Xiaoyang Dong, Jian Guo, Yantian Shen, Anyu Wang, Xiaoyun Wang
+
 requirements: python 3.7.0, numpy 1.21.5
 
 check_solution_svd.py: 
